@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Chat, Status, Call } from './screen';
+import { Chat, Status, Call, Login } from './screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,10 +14,20 @@ class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Chat"
             component={Chat} />
+          <Stack.Screen
+            name="Status"
+            component={Status} />
+          <Stack.Screen
+            name="Call"
+            component={Call} />
+          <Stack.Screen
+            name="Login"
+            component={Login} 
+            options={{ headerShown: false }}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
