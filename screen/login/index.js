@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 
 class Login extends Component {
@@ -12,7 +12,10 @@ class Login extends Component {
     }
 
     handlerLogin = () => {
-        console.log("Login");
+        if (this.state.email === "admin@g.co" && this.state.password === "password")
+            return this.props.navigation.navigate("Chat")
+
+        return Alert.alert("Gagal login")
     }
     
     render() {
@@ -24,7 +27,7 @@ class Login extends Component {
                         style={styles.inputText}
                         placeholder="Email..."
                         placeholderTextColor="#003f5c"
-                        onChange={value => this.setState({ email: value })} />
+                        onChangeText={value => this.setState({ email: value })} />
                 </View>
                 <View style={styles.inputView}>
                     <TextInput
@@ -32,7 +35,7 @@ class Login extends Component {
                         style={styles.inputText}
                         placeholder="Password..."
                         placeholderTextColor="#003f5c"
-                        onChange={value => this.setState({ password: value })} />
+                        onChangeText={value => this.setState({ password: value })} />
                 </View>
                 <TouchableOpacity style={styles.loginBtn} onPress={this.handlerLogin}>
                     <Text style={styles.loginText}>LOGIN</Text>
