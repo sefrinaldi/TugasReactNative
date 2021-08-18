@@ -13,7 +13,7 @@ class Login extends Component {
 
     handlerLogin = () => {
         if (this.state.email === "admin@g.co" && this.state.password === "password")
-            return this.props.navigation.navigate("Chat")
+            return this.props.navigation.navigate("TopTabs")
 
         return Alert.alert("Gagal login")
     }
