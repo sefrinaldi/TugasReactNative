@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 
@@ -12,13 +13,27 @@ class Login extends Component {
     }
 
     handlerLogin = () => {
-        if (this.state.email === "admin@g.co" && this.state.password === "password")
-            return this.props.navigation.navigate("TopTabs")
+        // if (this.state.email === "admin@g.co" && this.state.password === "password")
+        //     return this.props.navigation.navigate("TopTabs")
 
-        return Alert.alert("Gagal login")
+        // return Alert.alert("Gagal login")
+
+        const { userData } = this.props
+
+        userData
+            .filter(user => user.email === this.state.email && user.password === this.state.password)
+            .map(data => {
+                if (data.id !== "")
+                    return this.props.navigation.navigate("TopTabs")
+                else
+                    return Alert.alert("Gagal login")
+            })
+
+
     }
-    
+
     render() {
+        // console.log("data login: ",this.props.userData);
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>My App</Text>
@@ -93,4 +108,12 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login;
+const mapStateToProps = state => ({
+    userData: state.userList
+})
+
+const mapDispatchToProps = dispatch => {
+    return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

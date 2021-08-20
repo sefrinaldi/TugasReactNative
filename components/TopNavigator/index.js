@@ -1,17 +1,17 @@
 import React from 'react';
-import { Animated, View, TouchableOpacity } from 'react-native';
+import { Animated, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 const TopNavigator = ({ state, descriptors, navigation, position }) => {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={styles.tabContainer}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -43,15 +43,16 @@ const TopNavigator = ({ state, descriptors, navigation, position }) => {
 
         return (
           <TouchableOpacity
+            key={index}
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1 }}
+            style={styles.container}
           >
-            <Animated.Text style={{ opacity }}>
+            <Animated.Text style={styles.text(isFocused)}>
               {label}
             </Animated.Text>
           </TouchableOpacity>
@@ -60,5 +61,24 @@ const TopNavigator = ({ state, descriptors, navigation, position }) => {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  tabContainer: {
+    flexDirection: "row",
+    backgroundColor: "#115E54",
+    paddingVertical: 8,
+    paddingHorizontal: 34,
+    justifyContent: "space-between"
+  },
+  container: {
+    alignItems: "center"  
+  },
+  text: (isFocused) => ({
+    color: isFocused ? "#FFF" : "#009879",
+    fontSize: 20,
+    marginTop: 4,
+    fontWeight: "bold"
+  })
+});
 
 export default TopNavigator;
